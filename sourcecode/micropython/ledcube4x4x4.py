@@ -169,15 +169,15 @@ class ledcube :
                     # convert column pattern to binary list
                     bits = []
                     # complement of bit pattern (low to activate LED) 
-                    # bits = [(~int(x) + 2) for x in list('{0:0b}'.format(pat))]
+                    bits = [(~int(x) + 2) for x in list('{0:0b}'.format(pat))]
                     # bit pattern (high to activate LED) 
-                    bits = [int(x) for x in list('{0:0b}'.format(pat))]
+                    #bits = [int(x) for x in list('{0:0b}'.format(pat))]
                     # insert missing 1 bits if necessary 
                     while len(bits) < 16: 
-                        bits.insert(0, 0)
-                    # set level bits (low to activate)
-                    levl = [1]*4
-                    levl[idx] = 0
+                        bits.insert(1, 0)
+                    # set level bits (high to activate)
+                    levl = [0]*4
+                    levl[idx] = 1
                     # debug info
                     if self.debug:
                         print('column pattern: ', bits[0:16], ' - levels: ', levl)
@@ -188,8 +188,8 @@ class ledcube :
                     utime.sleep_ms(2)
                     # turnoff levels & columns
                     bits = []
-                    bits = [0]*16
-                    levl = [1]*4
+                    bits = [1]*16
+                    levl = [0]*4
                     self.shift_data(bits, levl)                    
                 # update current time
                 current_ms = utime.ticks_ms()
